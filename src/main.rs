@@ -21,6 +21,7 @@ fn convert(number: &f64, from: &str, to: &str) {
     let length_list = ["mm", "cm", "in", "dm", "ft", "yd", "m", "km", "mi"];
     let weight_list = ["mg", "g", "kg", "t", "oz", "lb", "st", "cwt"];
     let volume_list = ["ml", "cl", "dl", "l"];
+    let time_list = ["ns", "us", "ms", "s", "min", "h", "d"];
 
     if length_list.iter().any(|&x| x == from) && length_list.iter().any(|&x| x == to) {
         length(number, from, to);
@@ -28,6 +29,8 @@ fn convert(number: &f64, from: &str, to: &str) {
         weight(number, from, to);
     } else if volume_list.iter().any(|&x| x == from) && volume_list.iter().any(|&x| x == to) {
         volume(number, from, to);
+    } else if time_list.iter().any(|&x| x == from) && time_list.iter().any(|&x| x == to) {
+        time(number, from, to);
     } else {
         println!("Unknown unit")
     }
@@ -74,6 +77,21 @@ fn volume(number: &f64, from: &str, to: &str) {
     length_units.insert("cl", 0.001);
     length_units.insert("dl", 1.0);
     length_units.insert("l", 1000.0);
+
+    if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
+        let converted = number * from_factor / to_factor;
+        println!("{} {} = {} {}", number, from, converted, to);
+    }
+}
+fn time(number: &f64, from: &str, to: &str) {
+    let mut length_units: HashMap<&str, f64> = HashMap::new();
+    length_units.insert("ns", 0.000000001);
+    length_units.insert("us", 0.000001);
+    length_units.insert("ms", 0.001);
+    length_units.insert("s", 1.0);
+    length_units.insert("min", 60.0);
+    length_units.insert("h", 3600.0);
+    length_units.insert("d", 86400.0);
 
     if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
         let converted = number * from_factor / to_factor;
