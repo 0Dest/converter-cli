@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "converter-cli"
+name = "convert"
 version = "0.1.0"
 dependencies = [
  "env",
