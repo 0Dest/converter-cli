@@ -4,7 +4,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 4 {
-        println!("Please provide 3 arguments: <number> <from-unit> <to-unit>");
+        println!("More arguments pls");
         return;
     }
 
@@ -20,11 +20,14 @@ fn main() {
 fn convert(number: &f64, from: &str, to: &str) {
     let length_list = ["mm", "cm", "in", "dm", "ft", "yd", "m", "km", "mi"];
     let weight_list = ["mg", "g", "kg", "t", "oz", "lb", "st", "cwt"];
+    let volume_list = ["ml", "cl", "dl", "l"];
 
     if length_list.iter().any(|&x| x == from) && length_list.iter().any(|&x| x == to) {
         length(number, from, to);
     } else if weight_list.iter().any(|&x| x == from) && weight_list.iter().any(|&x| x == to) {
         weight(number, from, to);
+    } else if volume_list.iter().any(|&x| x == from) && volume_list.iter().any(|&x| x == to) {
+        volume(number, from, to);
     } else {
         println!("Unknown unit")
     }
@@ -58,6 +61,19 @@ fn weight(number: &f64, from: &str, to: &str) {
     length_units.insert("lb", 0.453592);
     length_units.insert("st", 6.35029);
     length_units.insert("cwt", 50.8023);
+
+    if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
+        let converted = number * from_factor / to_factor;
+        println!("{} {} = {} {}", number, from, converted, to);
+    }
+}
+
+fn volume(number: &f64, from: &str, to: &str) {
+    let mut length_units: HashMap<&str, f64> = HashMap::new();
+    length_units.insert("ml", 0.000001);
+    length_units.insert("cl", 0.001);
+    length_units.insert("dl", 1.0);
+    length_units.insert("l", 1000.0);
 
     if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
         let converted = number * from_factor / to_factor;
