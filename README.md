@@ -57,3 +57,5 @@ Now you can simply run:
 ```bash
 convert 100 cm m
 ```
+
+(ReadMe is generated with ChatGPT, i dont know english very good)
