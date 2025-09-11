@@ -108,7 +108,6 @@ fn storage(number: &f64, from: &str, to: &str) {
     length_units.insert("mib", (1024 * 1024) as f64);
     length_units.insert("gib", (1024 * 1024 * 1024) as f64);
     length_units.insert("tib", 1099511627776.0);
-
     length_units.insert("b", 1.0);
     length_units.insert("kb", 1000.0);
     length_units.insert("mb", (1000 * 1000) as f64);
