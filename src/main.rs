@@ -4,7 +4,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 4 {
-        println!("More arguments pls");
+        println!("Usage: {} <number <from unit> <to unit>", args[0]);
         return;
     }
 
