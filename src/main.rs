@@ -22,6 +22,7 @@ fn convert(number: &f64, from: &str, to: &str) {
     let weight_list = ["mg", "g", "kg", "t", "oz", "lb", "st", "cwt"];
     let volume_list = ["ml", "cl", "dl", "l"];
     let time_list = ["ns", "us", "ms", "s", "min", "h", "d"];
+    let storage_list = ["b", "kib", "mib", "gib", "tib", "b", "kb", "mb", "gb", "tb"];
 
     if length_list.iter().any(|&x| x == from) && length_list.iter().any(|&x| x == to) {
         length(number, from, to);
@@ -31,6 +32,8 @@ fn convert(number: &f64, from: &str, to: &str) {
         volume(number, from, to);
     } else if time_list.iter().any(|&x| x == from) && time_list.iter().any(|&x| x == to) {
         time(number, from, to);
+    } else if storage_list.iter().any(|&x| x == from) && storage_list.iter().any(|&x| x == to) {
+        storage(number, from, to);
     } else {
         println!("Unknown unit")
     }
@@ -92,6 +95,24 @@ fn time(number: &f64, from: &str, to: &str) {
     length_units.insert("min", 60.0);
     length_units.insert("h", 3600.0);
     length_units.insert("d", 86400.0);
+
+    if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
+        let converted = number * from_factor / to_factor;
+        println!("{} {} = {} {}", number, from, converted, to);
+    }
+}
+fn storage(number: &f64, from: &str, to: &str) {
+    let mut length_units: HashMap<&str, f64> = HashMap::new();
+    length_units.insert("b", 1.0);
+    length_units.insert("kib", 1024 as f64);
+    length_units.insert("mib", (1024 * 1024) as f64);
+    length_units.insert("gib", (1024 * 1024 * 1024) as f64);
+    length_units.insert("tib", 1099511627776.0);
+    length_units.insert("b", 1.0);
+    length_units.insert("kb", 1000.0);
+    length_units.insert("mb", (1000 * 1000) as f64);
+    length_units.insert("gb", (1000 * 1000 * 1000) as f64);
+    length_units.insert("tb", 1000000000000.0);
 
     if let (Some(&from_factor), Some(&to_factor)) = (length_units.get(from), length_units.get(to)) {
         let converted = number * from_factor / to_factor;
