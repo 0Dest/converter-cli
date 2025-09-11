@@ -18,6 +18,9 @@
 ### Time
 - ns (nanoseconds), us (microseconds), ms (milliseconds), s (seconds), min (minutes), h (hours), d (days)
 
+### Digital Storage
+- b (byte), kib (kibibyte), mib (mebibyte), gib (gibibyte), tib (tebibyte) and kb (kilobyte), mb (megabyte), gb (gigabyte), tb (terabyte)
+
 ---
 
 ## Usage
@@ -25,8 +28,8 @@
 Run the program with three arguments: `number`, `from unit`, and `to unit`.  
 
 ```bash
-./target/release/convert 100 cm m
-# Output: 100 cm = 1 m
+$ ./target/release/convert 100 cm m
+100 cm = 1 m
 ```
 
 ## Building and Running
